@@ -1,13 +1,10 @@
-'use client';
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Upload, FileText, Trash2, Eye, Wand2 } from 'lucide-react';
 import { StatusBadge } from '@/components/status-badges';
-import Link from 'next/link';
-import Image from 'next/image';
+import { Link } from 'react-router-dom';
 
 interface CaseFile {
   id: string;
@@ -20,21 +17,21 @@ interface CaseFile {
 export default function UploadPage() {
   const [files, setFiles] = useState<CaseFile[]>([
     {
-      id: '1',
+      id: 'case-001',
       filename: 'Smith_v_County_2024.pdf',
       uploadedAt: '2024-01-15 09:23',
       status: 'approved',
       court: 'Circuit Court, District 5',
     },
     {
-      id: '2',
+      id: 'case-002',
       filename: 'Johnson_Appeal_Notice.pdf',
       uploadedAt: '2024-01-14 14:15',
       status: 'pending',
       court: 'Appellate Court',
     },
     {
-      id: '3',
+      id: 'case-003',
       filename: 'Administrative_Review_Notice.pdf',
       uploadedAt: '2024-01-13 11:42',
       status: 'processing',
@@ -51,11 +48,10 @@ export default function UploadPage() {
       {/* Header with Image */}
       <Card className="relative overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/legal-team.jpg"
+          <img
+            src="/assets/images/legal-team.jpg"
             alt="Legal team collaboration"
-            fill
-            className="object-cover opacity-20"
+            className="object-cover w-full h-full opacity-20"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-[#0047CC]/70" />
         </div>
@@ -133,7 +129,7 @@ export default function UploadPage() {
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
                       {file.status === 'pending' && (
-                        <Link href={`/dashboard/workspace/${file.id}`}>
+                        <Link to={`/dashboard/workspace/${file.id}`}>
                           <Button size="sm" variant="outline" className="gap-2">
                             <Wand2 className="w-4 h-4" />
                             Process
@@ -141,7 +137,7 @@ export default function UploadPage() {
                         </Link>
                       )}
                       {file.status !== 'pending' && (
-                        <Link href={`/dashboard/verification/${file.id}`}>
+                        <Link to={`/dashboard/verification/${file.id}`}>
                           <Button size="sm" variant="outline" className="gap-2">
                             <Eye className="w-4 h-4" />
                             View

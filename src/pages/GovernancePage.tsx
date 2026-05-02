@@ -1,12 +1,9 @@
-'use client';
-
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { DeadlineEngine } from '@/components/deadline-engine';
 import { DirectiveTypeBadge } from '@/components/directive-type';
-import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { AlertTriangle, Download, Filter } from 'lucide-react';
-import Image from 'next/image';
 
 const departmentRiskData = [
   { department: 'Revenue', overdueDays: 12, count: 3, daysOverdue: 8 },
@@ -41,11 +38,10 @@ export default function GovernancePage() {
       {/* Header with Image */}
       <Card className="relative overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/courthouse-exterior.jpg"
+          <img
+            src="/assets/images/courthouse-exterior.jpg"
             alt="Courthouse"
-            fill
-            className="object-cover opacity-20"
+            className="object-cover w-full h-full opacity-20"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-[#0047CC]/70" />
         </div>
@@ -74,7 +70,7 @@ export default function GovernancePage() {
         <Card className="p-4">
           <p className="text-xs text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Total Pending</p>
           <p className="text-3xl font-bold text-foreground">89</p>
-          <p className="text-xs text-slate-500 dark:text-slate-500 mt-2">↑ 3 from last week</p>
+          <p className="text-xs text-slate-500 dark:text-slate-500 mt-2">+3 from last week</p>
         </Card>
         <Card className="p-4">
           <p className="text-xs text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Critical Deadlines</p>
@@ -152,7 +148,7 @@ export default function GovernancePage() {
                 <XAxis dataKey="bucket" stroke="currentColor" opacity={0.5} />
                 <YAxis stroke="currentColor" opacity={0.5} />
                 <Tooltip contentStyle={{ backgroundColor: 'var(--color-background)', border: '1px solid var(--color-border)' }} />
-                <Bar dataKey="count" fill="var(--color-primary)" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="count" fill="#0047CC" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </Card>
@@ -170,12 +166,12 @@ export default function GovernancePage() {
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={({ name, value }) => `${value}`}
+                  label={({ value }) => `${value}`}
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
                 >
-                  {directiveDistribution.map((entry, index) => (
+                  {directiveDistribution.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
@@ -183,7 +179,7 @@ export default function GovernancePage() {
               </PieChart>
             </ResponsiveContainer>
             <div className="mt-4 space-y-2 text-xs">
-              {directiveDistribution.map((item, idx) => (
+              {directiveDistribution.map((item) => (
                 <div key={item.name} className="flex items-center gap-2">
                   <DirectiveTypeBadge type={item.name.toLowerCase().replace(' ', '-') as any} />
                   <span className="ml-auto font-semibold text-foreground">{item.value}</span>

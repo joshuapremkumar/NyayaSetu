@@ -1,9 +1,6 @@
-'use client';
-
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import Image from 'next/image';
+import { Link } from 'react-router-dom';
 import { ArrowRight, FileUp, Wand2, CheckCircle, AlertCircle } from 'lucide-react';
 import { StatusBadge } from '@/components/status-badges';
 import { DirectiveTypeBadge } from '@/components/directive-type';
@@ -11,7 +8,7 @@ import { DirectiveTypeBadge } from '@/components/directive-type';
 export default function DashboardPage() {
   const recentCases = [
     {
-      id: '1',
+      id: 'case-001',
       caseNumber: '2024-CV-12345',
       filename: 'Smith_v_County_2024.pdf',
       court: 'Circuit Court, District 5',
@@ -20,7 +17,7 @@ export default function DashboardPage() {
       directive: 'Reinstatement',
     },
     {
-      id: '2',
+      id: 'case-002',
       caseNumber: '2024-CV-12346',
       filename: 'Johnson_Appeal_Notice.pdf',
       court: 'Appellate Court',
@@ -29,7 +26,7 @@ export default function DashboardPage() {
       directive: 'Appeal',
     },
     {
-      id: '3',
+      id: 'case-003',
       caseNumber: '2024-CV-12347',
       filename: 'Admin_Review_Action.pdf',
       court: 'Administrative Division',
@@ -50,11 +47,10 @@ export default function DashboardPage() {
       {/* Welcome Banner with Image */}
       <Card className="relative overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/scales-justice.jpg"
+          <img
+            src="/assets/images/scales-justice.jpg"
             alt="Scales of justice"
-            fill
-            className="object-cover opacity-20"
+            className="object-cover w-full h-full opacity-20"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0047CC]/90 to-[#0047CC]/70" />
         </div>
@@ -68,7 +64,7 @@ export default function DashboardPage() {
 
       {/* Quick Actions */}
       <div className="grid md:grid-cols-4 gap-4">
-        <Link href="/dashboard/upload">
+        <Link to="/dashboard/upload">
           <Card className="p-4 hover:shadow-lg transition-shadow cursor-pointer h-full">
             <div className="flex items-start justify-between mb-3">
               <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -80,7 +76,7 @@ export default function DashboardPage() {
           </Card>
         </Link>
 
-        <Link href="/dashboard/workspace">
+        <Link to="/dashboard/workspace/case-001">
           <Card className="p-4 hover:shadow-lg transition-shadow cursor-pointer h-full">
             <div className="flex items-start justify-between mb-3">
               <div className="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center">
@@ -92,7 +88,7 @@ export default function DashboardPage() {
           </Card>
         </Link>
 
-        <Link href="/dashboard/verification">
+        <Link to="/dashboard/verification/case-001">
           <Card className="p-4 hover:shadow-lg transition-shadow cursor-pointer h-full">
             <div className="flex items-start justify-between mb-3">
               <div className="w-10 h-10 bg-green-500/10 rounded-lg flex items-center justify-center">
@@ -104,7 +100,7 @@ export default function DashboardPage() {
           </Card>
         </Link>
 
-        <Link href="/dashboard/governance">
+        <Link to="/dashboard/governance">
           <Card className="p-4 hover:shadow-lg transition-shadow cursor-pointer h-full">
             <div className="flex items-start justify-between mb-3">
               <div className="w-10 h-10 bg-purple-500/10 rounded-lg flex items-center justify-center">
@@ -123,7 +119,7 @@ export default function DashboardPage() {
           <Card className="p-6">
             <p className="text-xs text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Total Cases</p>
             <p className="text-4xl font-bold text-foreground">89</p>
-            <p className="text-xs text-green-600 dark:text-green-400 mt-2">↑ 12 this week</p>
+            <p className="text-xs text-green-600 dark:text-green-400 mt-2">+12 this week</p>
           </Card>
 
           <Card className="p-6">
@@ -144,7 +140,7 @@ export default function DashboardPage() {
           <Card className="h-full flex flex-col">
             <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
               <h3 className="font-semibold text-lg text-foreground">Recent Cases</h3>
-              <Link href="/dashboard/upload">
+              <Link to="/dashboard/upload">
                 <Button size="sm" variant="outline" className="gap-2">
                   View All
                   <ArrowRight className="w-4 h-4" />

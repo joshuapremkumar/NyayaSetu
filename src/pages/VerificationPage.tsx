@@ -1,6 +1,5 @@
-'use client';
-
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -9,9 +8,9 @@ import { ExplainabilitySourceBox } from '@/components/explainability-source-box'
 import { DirectiveTypeBadge } from '@/components/directive-type';
 import { ConfidenceScore, RiskLevelBadge, StatusBadge } from '@/components/status-badges';
 import { Check, X, Edit2, Clock, FileText, User, CheckCircle } from 'lucide-react';
-import Image from 'next/image';
 
 export default function VerificationPage() {
+  const { caseId } = useParams<{ caseId: string }>();
   const [reviewerNotes, setReviewerNotes] = useState('');
 
   const auditEvents = [
@@ -43,18 +42,17 @@ export default function VerificationPage() {
       {/* Header with Image */}
       <Card className="relative overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/gavel-documents.jpg"
+          <img
+            src="/assets/images/gavel-documents.jpg"
             alt="Legal documents"
-            fill
-            className="object-cover opacity-20"
+            className="object-cover w-full h-full opacity-20"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-[#0047CC]/70" />
         </div>
         <div className="relative z-10 p-6 text-white">
           <h2 className="text-2xl font-bold mb-1">Verification & Audit</h2>
           <p className="text-blue-100 text-sm">
-            Case: Smith_v_County_2024 | Status: Under Review
+            Case: {caseId} | Status: Under Review
           </p>
         </div>
       </Card>
@@ -101,7 +99,7 @@ export default function VerificationPage() {
             <div className="space-y-4">
               <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
                 <p className="text-sm text-foreground leading-relaxed italic">
-                  "The defendant shall reinstate the complainant to their former position with full back pay and benefits within thirty (30) days of this order. All seniority rights and benefits shall be restored retroactive to the date of the improper termination."
+                  {`"The defendant shall reinstate the complainant to their former position with full back pay and benefits within thirty (30) days of this order. All seniority rights and benefits shall be restored retroactive to the date of the improper termination."`}
                 </p>
               </div>
 

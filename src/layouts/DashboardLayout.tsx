@@ -1,24 +1,18 @@
-'use client';
-
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link, useLocation, Outlet } from 'react-router-dom';
 import { BarChart3, FileUp, Wand2, CheckCircle, Settings, LogOut, Menu, Scale } from 'lucide-react';
 import { useState } from 'react';
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const pathname = usePathname();
+export default function DashboardLayout() {
+  const location = useLocation();
+  const pathname = location.pathname;
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const navItems = [
-    { href: '/dashboard', label: 'Dashboard', icon: BarChart3 },
-    { href: '/dashboard/upload', label: 'Upload Cases', icon: FileUp },
-    { href: '/dashboard/workspace', label: 'AI Workspace', icon: Wand2 },
-    { href: '/dashboard/verification', label: 'Verification', icon: CheckCircle },
-    { href: '/dashboard/governance', label: 'Governance', icon: BarChart3 },
+    { to: '/dashboard', label: 'Dashboard', icon: BarChart3 },
+    { to: '/dashboard/upload', label: 'Upload Cases', icon: FileUp },
+    { to: '/dashboard/workspace/case-001', label: 'AI Workspace', icon: Wand2 },
+    { to: '/dashboard/verification/case-001', label: 'Verification', icon: CheckCircle },
+    { to: '/dashboard/governance', label: 'Governance', icon: BarChart3 },
   ];
 
   return (
@@ -43,11 +37,11 @@ export default function DashboardLayout({
         <nav className="flex-1 px-3 py-6 space-y-2 overflow-y-auto">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+            const isActive = pathname === item.to || pathname.startsWith(item.to.split('/').slice(0, 3).join('/') + '/');
             return (
               <Link
-                key={item.href}
-                href={item.href}
+                key={item.to}
+                to={item.to}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                   isActive
                     ? 'bg-[#0047CC] text-white'
@@ -91,16 +85,16 @@ export default function DashboardLayout({
           <h1 className="text-2xl font-bold text-foreground">CourtAction AI</h1>
           <div className="flex items-center gap-4">
             <span className="text-sm text-slate-600 dark:text-slate-400">Judicial Administrator</span>
-            <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+            <Link to="/login" className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
               <LogOut className="w-5 h-5 text-slate-600 dark:text-slate-400" />
-            </button>
+            </Link>
           </div>
         </header>
 
         {/* Page Content */}
         <main className="flex-1 overflow-auto">
           <div className="p-6">
-            {children}
+            <Outlet />
           </div>
         </main>
       </div>

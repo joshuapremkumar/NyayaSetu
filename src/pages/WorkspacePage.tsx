@@ -1,37 +1,34 @@
-'use client';
-
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { DeadlineEngine } from '@/components/deadline-engine';
 import { ExplainabilitySourceBox } from '@/components/explainability-source-box';
-import { DirectiveTypeBadge, DirectiveTypeSelector, type DirectiveType } from '@/components/directive-type';
+import { DirectiveTypeSelector, type DirectiveType } from '@/components/directive-type';
 import { ConfidenceScore, RiskLevelBadge } from '@/components/status-badges';
 import { Check, X, Edit2, FileText } from 'lucide-react';
-import Image from 'next/image';
 
-export default function AIWorkspacePage() {
+export default function WorkspacePage() {
+  const { caseId } = useParams<{ caseId: string }>();
   const [directiveType, setDirectiveType] = useState<DirectiveType>('compliance');
-  const [extracted, setExtracted] = useState(true);
+  const [extracted] = useState(true);
 
   return (
     <div className="space-y-6">
       {/* Header with Image */}
       <Card className="relative overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/ai-legal-tech.jpg"
+          <img
+            src="/assets/images/ai-legal-tech.jpg"
             alt="AI Legal Technology"
-            fill
-            className="object-cover opacity-15"
+            className="object-cover w-full h-full opacity-15"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 to-[#0047CC]/60" />
         </div>
         <div className="relative z-10 p-6 text-white">
           <h2 className="text-2xl font-bold mb-1">AI Workspace</h2>
           <p className="text-blue-100 text-sm">
-            Extract and analyze case directives with AI precision
+            Extract and analyze case directives with AI precision | Case: {caseId}
           </p>
         </div>
       </Card>
@@ -57,7 +54,7 @@ export default function AIWorkspacePage() {
                 <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-primary p-4 rounded">
                   <p className="font-semibold text-foreground mb-2">Key Directive:</p>
                   <p className="text-sm text-foreground italic">
-                    "The defendant shall reinstate the complainant to their former position with full back pay and benefits within thirty (30) days of this order."
+                    {`"The defendant shall reinstate the complainant to their former position with full back pay and benefits within thirty (30) days of this order."`}
                   </p>
                 </div>
               </div>
@@ -109,7 +106,7 @@ export default function AIWorkspacePage() {
                 <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
                   <h4 className="text-xs font-semibold text-blue-900 dark:text-blue-200 mb-2">EXTRACTED DIRECTIVE:</h4>
                   <p className="text-sm text-blue-900 dark:text-blue-300 leading-relaxed italic">
-                    "Reinstate the complainant to their former position with full back pay and benefits within thirty (30) days."
+                    {`"Reinstate the complainant to their former position with full back pay and benefits within thirty (30) days."`}
                   </p>
                 </div>
 
