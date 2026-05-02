@@ -1,10 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowRight, CheckCircle, Shield, Zap, FileText, Lock, BarChart3, Scale, Building2, Users } from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { Link } from 'react-router-dom';
 
-export default function Home() {
+export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
@@ -17,9 +16,9 @@ export default function Home() {
             <span className="font-bold text-xl text-foreground">CourtAction AI</span>
           </div>
           <div className="flex items-center gap-4">
-            <Link href="#features" className="text-sm text-slate-600 hover:text-foreground transition-colors hidden sm:block">Features</Link>
-            <Link href="#about" className="text-sm text-slate-600 hover:text-foreground transition-colors hidden sm:block">About</Link>
-            <Link href="/dashboard">
+            <a href="#features" className="text-sm text-slate-600 hover:text-foreground transition-colors hidden sm:block">Features</a>
+            <a href="#about" className="text-sm text-slate-600 hover:text-foreground transition-colors hidden sm:block">About</a>
+            <Link to="/dashboard">
               <Button className="gap-2 bg-[#0047CC] hover:bg-[#003B99]">
                 Get Started
                 <ArrowRight className="w-4 h-4" />
@@ -33,12 +32,10 @@ export default function Home() {
       <section className="relative overflow-hidden">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/hero-justice.jpg"
+          <img
+            src="/assets/images/hero-justice.jpg"
             alt="Modern courthouse interior"
-            fill
-            className="object-cover"
-            priority
+            className="object-cover w-full h-full"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/80 to-slate-900/60" />
         </div>
@@ -56,17 +53,17 @@ export default function Home() {
               Extract, verify, and govern legal directives with AI precision. Meet deadlines, track risk, and ensure compliance—all in one enterprise platform.
             </p>
             <div className="flex gap-4 flex-wrap">
-              <Link href="/dashboard">
+              <Link to="/dashboard">
                 <Button size="lg" className="gap-2 bg-[#0047CC] hover:bg-[#003B99] text-base px-6">
                   Access Platform
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
-              <Link href="#features">
+              <a href="#features">
                 <Button size="lg" variant="outline" className="text-base px-6 border-slate-500 text-white hover:bg-white/10">
                   Explore Features
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -108,11 +105,10 @@ export default function Home() {
         {/* Feature Row 1 - Image Left */}
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
           <div className="relative h-80 rounded-2xl overflow-hidden shadow-2xl">
-            <Image
-              src="/images/ai-legal-tech.jpg"
+            <img
+              src="/assets/images/ai-legal-tech.jpg"
               alt="AI-powered legal technology"
-              fill
-              className="object-cover"
+              className="object-cover w-full h-full"
             />
           </div>
           <div className="space-y-6">
@@ -168,11 +164,10 @@ export default function Home() {
             </ul>
           </div>
           <div className="relative h-80 rounded-2xl overflow-hidden shadow-2xl lg:order-2">
-            <Image
-              src="/images/gavel-documents.jpg"
+            <img
+              src="/assets/images/gavel-documents.jpg"
               alt="Legal documents and gavel"
-              fill
-              className="object-cover"
+              className="object-cover w-full h-full"
             />
           </div>
         </div>
@@ -243,11 +238,10 @@ export default function Home() {
               </div>
             </div>
             <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src="/images/legal-team.jpg"
+              <img
+                src="/assets/images/legal-team.jpg"
                 alt="Legal team collaboration"
-                fill
-                className="object-cover"
+                className="object-cover w-full h-full"
               />
             </div>
           </div>
@@ -257,11 +251,10 @@ export default function Home() {
       {/* CTA Section with Courthouse Background */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/courthouse-exterior.jpg"
+          <img
+            src="/assets/images/courthouse-exterior.jpg"
             alt="Courthouse exterior"
-            fill
-            className="object-cover"
+            className="object-cover w-full h-full"
           />
           <div className="absolute inset-0 bg-[#0047CC]/90" />
         </div>
@@ -272,7 +265,7 @@ export default function Home() {
           <p className="text-blue-100 mb-8 text-lg max-w-2xl mx-auto">
             Start with CourtAction AI today and get institutional-grade decision support for your legal operations.
           </p>
-          <Link href="/dashboard">
+          <Link to="/dashboard">
             <Button size="lg" className="gap-2 bg-white text-[#0047CC] hover:bg-blue-50 text-base px-8">
               Access Platform
               <ArrowRight className="w-5 h-5" />
