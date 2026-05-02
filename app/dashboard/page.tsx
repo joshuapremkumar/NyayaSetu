@@ -3,6 +3,7 @@
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, FileUp, Wand2, CheckCircle, AlertCircle } from 'lucide-react';
 import { StatusBadge } from '@/components/status-badges';
 import { DirectiveTypeBadge } from '@/components/directive-type';
@@ -46,13 +47,24 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      {/* Welcome Section */}
-      <div>
-        <h1 className="text-4xl font-bold text-foreground mb-2">Welcome Back</h1>
-        <p className="text-slate-600 dark:text-slate-400">
-          Here&apos;s your judicial case management overview
-        </p>
-      </div>
+      {/* Welcome Banner with Image */}
+      <Card className="relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/scales-justice.jpg"
+            alt="Scales of justice"
+            fill
+            className="object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0047CC]/90 to-[#0047CC]/70" />
+        </div>
+        <div className="relative z-10 p-8 text-white">
+          <h1 className="text-3xl font-bold mb-2">Welcome Back</h1>
+          <p className="text-blue-100 max-w-xl">
+            Your judicial case management overview. Track deadlines, verify extractions, and ensure governance compliance.
+          </p>
+        </div>
+      </Card>
 
       {/* Quick Actions */}
       <div className="grid md:grid-cols-4 gap-4">

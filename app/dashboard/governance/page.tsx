@@ -6,6 +6,7 @@ import { DeadlineEngine } from '@/components/deadline-engine';
 import { DirectiveTypeBadge } from '@/components/directive-type';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { AlertTriangle, Download, Filter } from 'lucide-react';
+import Image from 'next/image';
 
 const departmentRiskData = [
   { department: 'Revenue', overdueDays: 12, count: 3, daysOverdue: 8 },
@@ -37,25 +38,36 @@ const COLORS = ['#0047CC', '#10B981', '#F59E0B', '#3B82F6', '#8B5CF6', '#EC4899'
 export default function GovernancePage() {
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex justify-between items-start">
-        <div>
-          <h2 className="text-3xl font-bold text-foreground mb-2">Governance Dashboard</h2>
-          <p className="text-slate-600 dark:text-slate-400">
-            Executive oversight and compliance tracking
-          </p>
+      {/* Header with Image */}
+      <Card className="relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/courthouse-exterior.jpg"
+            alt="Courthouse"
+            fill
+            className="object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-[#0047CC]/70" />
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" className="gap-2">
-            <Filter className="w-4 h-4" />
-            Filter
-          </Button>
-          <Button variant="outline" className="gap-2">
-            <Download className="w-4 h-4" />
-            Export
-          </Button>
+        <div className="relative z-10 p-6 flex justify-between items-center">
+          <div className="text-white">
+            <h2 className="text-2xl font-bold mb-1">Governance Dashboard</h2>
+            <p className="text-blue-100 text-sm">
+              Executive oversight and compliance tracking
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Button variant="outline" className="gap-2 bg-white/10 border-white/30 text-white hover:bg-white/20">
+              <Filter className="w-4 h-4" />
+              Filter
+            </Button>
+            <Button variant="outline" className="gap-2 bg-white/10 border-white/30 text-white hover:bg-white/20">
+              <Download className="w-4 h-4" />
+              Export
+            </Button>
+          </div>
         </div>
-      </div>
+      </Card>
 
       {/* Key Metrics */}
       <div className="grid md:grid-cols-4 gap-4">

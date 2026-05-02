@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BarChart3, FileUp, Wand2, CheckCircle, Settings, LogOut, Menu } from 'lucide-react';
+import { BarChart3, FileUp, Wand2, CheckCircle, Settings, LogOut, Menu, Scale } from 'lucide-react';
 import { useState } from 'react';
 
 export default function DashboardLayout({
@@ -32,8 +32,8 @@ export default function DashboardLayout({
         {/* Logo */}
         <div className="p-4 border-b border-slate-800 flex items-center justify-between">
           <div className={`flex items-center gap-2 ${!sidebarOpen && 'justify-center w-full'}`}>
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center font-bold text-sm">
-              CA
+            <div className="w-10 h-10 bg-[#0047CC] rounded-xl flex items-center justify-center">
+              <Scale className="w-5 h-5 text-white" />
             </div>
             {sidebarOpen && <span className="font-bold text-sm">CourtAction</span>}
           </div>
@@ -50,7 +50,7 @@ export default function DashboardLayout({
                 href={item.href}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                   isActive
-                    ? 'bg-primary text-white'
+                    ? 'bg-[#0047CC] text-white'
                     : 'text-slate-300 hover:bg-slate-800'
                 } ${!sidebarOpen && 'justify-center'}`}
                 title={!sidebarOpen ? item.label : ''}

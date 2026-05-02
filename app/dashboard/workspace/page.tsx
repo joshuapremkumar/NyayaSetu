@@ -9,6 +9,7 @@ import { ExplainabilitySourceBox } from '@/components/explainability-source-box'
 import { DirectiveTypeBadge, DirectiveTypeSelector, type DirectiveType } from '@/components/directive-type';
 import { ConfidenceScore, RiskLevelBadge } from '@/components/status-badges';
 import { Check, X, Edit2, FileText } from 'lucide-react';
+import Image from 'next/image';
 
 export default function AIWorkspacePage() {
   const [directiveType, setDirectiveType] = useState<DirectiveType>('compliance');
@@ -16,13 +17,24 @@ export default function AIWorkspacePage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h2 className="text-3xl font-bold text-foreground mb-2">AI Workspace</h2>
-        <p className="text-slate-600 dark:text-slate-400">
-          Extract and analyze case directives with AI precision
-        </p>
-      </div>
+      {/* Header with Image */}
+      <Card className="relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/ai-legal-tech.jpg"
+            alt="AI Legal Technology"
+            fill
+            className="object-cover opacity-15"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 to-[#0047CC]/60" />
+        </div>
+        <div className="relative z-10 p-6 text-white">
+          <h2 className="text-2xl font-bold mb-1">AI Workspace</h2>
+          <p className="text-blue-100 text-sm">
+            Extract and analyze case directives with AI precision
+          </p>
+        </div>
+      </Card>
 
       <div className="grid lg:grid-cols-3 gap-6 h-[calc(100vh-280px)]">
         {/* Left: PDF Viewer Mock */}

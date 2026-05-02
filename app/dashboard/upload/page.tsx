@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Upload, FileText, Trash2, Eye, Wand2 } from 'lucide-react';
 import { StatusBadge } from '@/components/status-badges';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface CaseFile {
   id: string;
@@ -47,13 +48,24 @@ export default function UploadPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h2 className="text-3xl font-bold text-foreground mb-2">Upload Cases</h2>
-        <p className="text-slate-600 dark:text-slate-400">
-          Upload judicial documents for AI extraction and verification
-        </p>
-      </div>
+      {/* Header with Image */}
+      <Card className="relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/legal-team.jpg"
+            alt="Legal team collaboration"
+            fill
+            className="object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-[#0047CC]/70" />
+        </div>
+        <div className="relative z-10 p-6 text-white">
+          <h2 className="text-2xl font-bold mb-1">Upload Cases</h2>
+          <p className="text-blue-100 text-sm">
+            Upload judicial documents for AI extraction and verification
+          </p>
+        </div>
+      </Card>
 
       {/* Upload Section */}
       <Card className="border-2 border-dashed border-primary/30 p-12 text-center hover:border-primary/50 transition-colors cursor-pointer">

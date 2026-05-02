@@ -9,6 +9,7 @@ import { ExplainabilitySourceBox } from '@/components/explainability-source-box'
 import { DirectiveTypeBadge } from '@/components/directive-type';
 import { ConfidenceScore, RiskLevelBadge, StatusBadge } from '@/components/status-badges';
 import { Check, X, Edit2, Clock, FileText, User, CheckCircle } from 'lucide-react';
+import Image from 'next/image';
 
 export default function VerificationPage() {
   const [reviewerNotes, setReviewerNotes] = useState('');
@@ -39,13 +40,24 @@ export default function VerificationPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h2 className="text-3xl font-bold text-foreground mb-2">Verification & Audit</h2>
-        <p className="text-slate-600 dark:text-slate-400">
-          Case: Smith_v_County_2024 | Status: Under Review
-        </p>
-      </div>
+      {/* Header with Image */}
+      <Card className="relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/gavel-documents.jpg"
+            alt="Legal documents"
+            fill
+            className="object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-[#0047CC]/70" />
+        </div>
+        <div className="relative z-10 p-6 text-white">
+          <h2 className="text-2xl font-bold mb-1">Verification & Audit</h2>
+          <p className="text-blue-100 text-sm">
+            Case: Smith_v_County_2024 | Status: Under Review
+          </p>
+        </div>
+      </Card>
 
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Main Content */}
