@@ -1,10 +1,11 @@
 'use client';
 
-import { AlertCircle, CheckCircle, Clock, XCircle } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { AlertCircle, CheckCircle, Clock, Loader2, XCircle } from 'lucide-react';
 
-type StatusType = 'pending' | 'approved' | 'rejected' | 'warning';
+type StatusType = 'pending' | 'approved' | 'rejected' | 'warning' | 'processing';
 
-const STATUS_CONFIG: Record<StatusType, { icon: React.ReactNode; color: string; label: string }> = {
+const STATUS_CONFIG: Record<StatusType, { icon: ReactNode; color: string; label: string }> = {
   pending: {
     icon: <Clock className="w-4 h-4" />,
     color: 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800',
@@ -24,6 +25,11 @@ const STATUS_CONFIG: Record<StatusType, { icon: React.ReactNode; color: string; 
     icon: <AlertCircle className="w-4 h-4" />,
     color: 'bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-800',
     label: 'Warning',
+  },
+  processing: {
+    icon: <Loader2 className="w-4 h-4 animate-spin" />,
+    color: 'bg-violet-50 text-violet-700 border-violet-200 dark:bg-violet-900/30 dark:text-violet-300 dark:border-violet-800',
+    label: 'Processing',
   },
 };
 
