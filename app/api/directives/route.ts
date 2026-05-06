@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import prisma from '@/lib/prisma';
 import { requireAuth, requireRole } from '@/lib/auth';
+import type { Directive, Case } from '@prisma/client';
+
+type DirectiveWithCase = Directive & { case: Pick<Case, 'caseNumber' | 'department'> };
 
 const createDirectiveSchema = z.object({
   caseId: z.string().uuid(),
@@ -40,7 +43,7 @@ export async function GET(req: NextRequest) {
     });
 
     const filtered = user.role === 'DEPARTMENT_OFFICER'
-      ? directives.filter((d) => d.case.department === user.department)
+      ? directives.filter((d: DirectiveWithCase) => d.case.department === user.department)
       : directives;
 
     return NextResponse.json({ directives: filtered });
