@@ -10,6 +10,7 @@ next.user-config.*
 # Environment variables
 .env
 .env*.local
+.env.*.local
 backend/.env
 
 # Dependencies
@@ -29,6 +30,8 @@ backend/uploads/*
 # Database
 *.db
 *.sqlite
+prisma/migrations/*
+!prisma/migrations/.gitkeep
 
 # Logs
 logs
@@ -52,10 +55,6 @@ Thumbs.db
 # Testing
 coverage/
 .nyc_output/
-
-# Prisma
-backend/prisma/migrations/*
-!backend/prisma/migrations/.gitkeep
 
 # Temporary files
 *.tmp

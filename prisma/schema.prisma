@@ -1,0 +1,231 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  ADMIN
+  LEGAL_REVIEWER
+  DEPARTMENT_OFFICER
+}
+
+enum CaseStatus {
+  pending
+  processing
+  verified
+  rejected
+  extracted
+  under_review
+  approved
+}
+
+enum CasePriority {
+  high
+  medium
+  low
+}
+
+enum DirectiveType {
+  compliance
+  appeal
+  review
+  reinstatement
+  compensation
+  policy_amendment
+  administrative_action
+  escalation
+  stay_order
+}
+
+enum RiskLevel {
+  low
+  medium
+  high
+}
+
+enum DeadlineType {
+  compliance
+  appeal
+  escalation
+}
+
+enum DeadlineUrgency {
+  critical
+  warning
+  normal
+}
+
+enum ReviewAction {
+  uploaded
+  processed
+  reviewed
+  approved
+  rejected
+  edited
+}
+
+enum ReviewDecision {
+  approve
+  edit
+  reject
+}
+
+model User {
+  id           String      @id @default(uuid())
+  email        String      @unique
+  passwordHash String      @map("password_hash")
+  name         String
+  role         Role        @default(DEPARTMENT_OFFICER)
+  department   String?
+  createdAt    DateTime    @default(now()) @map("created_at")
+  updatedAt    DateTime    @updatedAt @map("updated_at")
+
+  cases        Case[]
+  auditLogs    AuditLog[]
+  uploadedFiles UploadedFile[]
+  reviewLogs   ReviewLog[]
+
+  @@map("users")
+}
+
+model Case {
+  id            String      @id @default(uuid())
+  caseNumber    String      @unique @map("case_number")
+  court         String
+  department    String
+  filingDate    DateTime    @map("filing_date")
+  status        CaseStatus  @default(pending)
+  priority      CasePriority @default(medium)
+  fileName      String      @map("file_name")
+  fileUrl       String?     @map("file_url")
+  uploadedById  String      @map("uploaded_by_id")
+  uploadedAt    DateTime    @default(now()) @map("uploaded_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+
+  uploadedBy    User        @relation(fields: [uploadedById], references: [id])
+  directives    Directive[]
+  deadlines     Deadline[]
+  auditLogs     AuditLog[]
+  uploadedFiles UploadedFile[]
+  reviewLogs    ReviewLog[]
+
+  @@map("cases")
+}
+
+model Directive {
+  id                    String         @id @default(uuid())
+  caseId                String         @map("case_id")
+  type                  DirectiveType
+  content               String
+  confidenceScore       Float          @map("confidence_score")
+  riskLevel             RiskLevel      @map("risk_level")
+  responsibleDepartment String         @map("responsible_department")
+  verified              Boolean        @default(false)
+  verificationNotes     String?        @map("verification_notes")
+  verifiedAt            DateTime?      @map("verified_at")
+  verifiedById          String?        @map("verified_by_id")
+  reviewStatus          String         @default("pending") @map("review_status")
+  createdAt             DateTime       @default(now()) @map("created_at")
+  updatedAt             DateTime       @updatedAt @map("updated_at")
+
+  case                  Case           @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  sourceReferences      SourceReference[]
+  reviewLogs            ReviewLog[]
+
+  @@map("directives")
+}
+
+model SourceReference {
+  id           String   @id @default(uuid())
+  directiveId  String   @map("directive_id")
+  pageNumber   Int      @map("page_number")
+  paragraphNumber Int   @map("paragraph_number")
+  snippet      String
+  highlightStart Int?   @map("highlight_start")
+  highlightEnd   Int?   @map("highlight_end")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  directive    Directive @relation(fields: [directiveId], references: [id], onDelete: Cascade)
+
+  @@map("source_references")
+}
+
+model UploadedFile {
+  id           String   @id @default(uuid())
+  caseId       String   @map("case_id")
+  blobUrl      String   @map("blob_url")
+  blobKey      String   @map("blob_key")
+  fileName     String   @map("file_name")
+  mimeType     String   @map("mime_type")
+  sizeBytes    Int      @map("size_bytes")
+  uploadedById String   @map("uploaded_by_id")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  case         Case     @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  uploadedBy   User     @relation(fields: [uploadedById], references: [id])
+
+  @@index([caseId])
+  @@index([uploadedById])
+  @@map("uploaded_files")
+}
+
+model ReviewLog {
+  id          String         @id @default(uuid())
+  caseId       String        @map("case_id")
+  directiveId  String?       @map("directive_id")
+  reviewerId   String        @map("reviewer_id")
+  action       ReviewDecision
+  notes        String?
+  beforeJson   Json?         @map("before_json")
+  afterJson    Json?         @map("after_json")
+  createdAt    DateTime      @default(now()) @map("created_at")
+
+  case         Case          @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  directive    Directive?    @relation(fields: [directiveId], references: [id], onDelete: SetNull)
+  reviewer     User          @relation(fields: [reviewerId], references: [id])
+
+  @@index([caseId])
+  @@index([directiveId])
+  @@index([reviewerId])
+  @@map("review_logs")
+}
+
+model Deadline {
+  id           String          @id @default(uuid())
+  caseId       String          @map("case_id")
+  type         DeadlineType
+  dueDate      DateTime        @map("due_date")
+  daysRemaining Int            @map("days_remaining")
+  urgency      DeadlineUrgency
+  completed    Boolean         @default(false)
+  completedAt  DateTime?       @map("completed_at")
+  createdAt    DateTime        @default(now()) @map("created_at")
+  updatedAt    DateTime        @updatedAt @map("updated_at")
+
+  case         Case            @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@map("deadlines")
+}
+
+model AuditLog {
+  id        String       @id @default(uuid())
+  caseId    String       @map("case_id")
+  userId    String       @map("user_id")
+  action    ReviewAction
+  notes     String?
+  ipAddress String?      @map("ip_address")
+  timestamp DateTime     @default(now())
+
+  case      Case         @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  user      User         @relation(fields: [userId], references: [id])
+
+  @@index([caseId])
+  @@index([userId])
+  @@index([timestamp])
+  @@map("audit_logs")
+}
