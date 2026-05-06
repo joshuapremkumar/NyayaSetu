@@ -19,10 +19,6 @@
   Transform complex court orders into actionable directives. Track deadlines. Ensure compliance.
 </p>
 
-<p align="center">
-  <em>Built for the IBM Hackathon Dev Day</em>
-</p>
-
 ---
 
 ## 📋 Table of Contents
@@ -431,10 +427,6 @@ This project is licensed under the **MIT License**.
 ---
 
 ## 👥 Team
-
-<p align="center">
-  <strong>Built with ❤️ at the IBM Hackathon Dev Day</strong>
-</p>
 
 <p align="center">
   <strong>For better governance and judicial compliance</strong>
